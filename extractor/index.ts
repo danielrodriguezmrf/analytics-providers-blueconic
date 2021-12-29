@@ -12,20 +12,34 @@
  * from Marfeel Solutions SL.
  */
 
-import { Config } from '../src';
+import { Configuration } from '../src';
+
+const SRC = 'x721';
 
 export default class Extractor {
-	static onRequest(url: string, page: any): Promise<Config[]> {
-		return this.matches(url) ?
-			Promise.resolve([Extractor.extract(url)]) :
-			Promise.resolve([]);
+	static onRequest(url: string, page: any): Promise<Partial<Configuration>[]> {
+		const uri = new URL(url);
+
+		return this.matches(uri.host) ? Promise.resolve([this.extract(uri.href)]) : Promise.resolve([]);
 	}
 
 	private static matches(url: string): boolean {
-		// TODO To be implemented
+
+		return url.includes(SRC);
+
 	}
 
-	private static extract(url: string): Config {
-		// TODO To be implemented
+	private static extract(url: string): Configuration {
+		return {
+			vars: {
+				config: ''
+			},
+			touchVars: {
+				scriptSrc: url
+			},
+			triggers: {
+				__extends: 'marfeel/index/resources/analytics/triggers/default/pageview.json'
+			}
+		}
 	}
 }
