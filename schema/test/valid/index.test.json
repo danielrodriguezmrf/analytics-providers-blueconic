@@ -1,1 +1,8 @@
-{}
+{
+	"vars": {
+		"config": "hola"
+	},
+	"touchVars": {
+		"scriptSrc": "test"
+	}
+}

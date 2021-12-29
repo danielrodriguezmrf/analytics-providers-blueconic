@@ -14,28 +14,26 @@
 
 import Extractor from './index';
 
-describe('extractor', () => {
-	describe('onRequest', () => {
-		let url;
+const scriptSrc = 'https://x721.yourmoney.com/script.js';
 
-		describe('url matches pattern', () => {
-			beforeEach(() => {
+describe('blueconic extractor', () => {
 
-			});
+	test('returns script', async () => {
 
-			test('extracts data', async() => {
+		const result = await Extractor.onRequest(scriptSrc, {});
 
-			});
-		});
-
-		describe('url not matches pattern', () => {
-			beforeEach(() => {
-
-			});
-
-			test('returns empty result', async() => {
-
-			});
-		});
+		expect(result).toEqual([
+			{
+				vars: {
+					config: ''
+				},
+				touchVars: {
+					scriptSrc
+				},
+				triggers: {
+					__extends: 'marfeel/index/resources/analytics/triggers/default/pageview.json'
+				}
+			}
+		]);
 	});
 });

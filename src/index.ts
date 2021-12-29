@@ -12,23 +12,22 @@
  * from Marfeel Solutions SL.
  */
 
-
 import { Marfeel } from '@marfeel/analytics-providers-environment';
-import { Config } from './types';
+import { Configuration } from './types';
 
 export * from './types';
 
-export default class Provider {
+export default class Blueconic {
 	$initialized: Promise<void>;
 
-	constructor(config: Config, marfeel: Marfeel) {
-		this.$initialized = // TODO initialize it!
+	constructor( { touchVars }: Configuration, environment: Marfeel) {
+		this.$initialized = environment.scripts.installScript(touchVars?.scriptSrc as string, 'mrf-blueconic', {});
 	}
 
+	async pageview(config: Configuration, marfeel: Marfeel): Promise<void> {
+		await this.$initialized;
 
-	async pageview(config: Config, marfeel: Marfeel): Promise<void> {
-		this.$initialized;
-
-		return Promise.resolve()
+		return Promise.resolve();
 	}
+
 }

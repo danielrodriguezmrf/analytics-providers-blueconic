@@ -12,7 +12,7 @@
  * from Marfeel Solutions SL.
  */
 
-export interface Config {
+export interface Configuration {
 	vars: Vars;
 	triggers: Triggers;
 	extraUrlParams?: ExtraUrlParams;
@@ -21,9 +21,12 @@ export interface Config {
 }
 
 export interface Vars {
+	config: string;
 }
 
 export interface TouchVars {
+	scriptSrc: string;
+	trackingOptions?: Record<string, any>;
 }
 
 export interface Triggers {

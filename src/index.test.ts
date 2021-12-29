@@ -13,19 +13,40 @@
  */
 
 import { Marfeel } from '@marfeel/analytics-providers-environment';
-import Provider, { Config } from './index';
+import Blueconic, { Configuration } from '.';
 
 describe('Provider', () => {
+	let configuration: Configuration;
 	let marfeel: Marfeel;
 
 	beforeEach(() => {
+		configuration = {
+			vars: {
+				config: ''
+			},
+			touchVars: {
+				scriptSrc: 'https://x721.yourmoney.com/script.js',
+			},
+			triggers: {}
+		};
 		marfeel = {
-			location: {
-				protocol: 'http://',
-				hostname: 'testHostname',
-				referrer: 'testReferrer'
+			scripts: {
+				installScript: jest.fn(() => Promise.resolve())
 			}
-		} as any as Marfeel; // eslint-disable-line @typescript-eslint/no-explicit-any
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		} as any as Marfeel;
+	});
+
+	describe('constructor', () => {
+		test('initializes blueconic script', () => {
+			new Blueconic(configuration, marfeel);
+
+			expect(marfeel.scripts.installScript).toHaveBeenCalledWith(
+				'https://x721.yourmoney.com/script.js',
+				'mrf-blueconic',
+				{}
+			);
+		});
 	});
 
 	describe('pageview', () => {
